@@ -40,6 +40,9 @@ registerRoute(
   })
 );
 
+// My instructor Dan Mueller gave me this code and said I should use it in the Challenge.
+// He said you should direct any concerns directly to him via Slack or at dmueller@2u.com
+
 // Set up image cache
 registerRoute(
   ({ request }) => request.destination === 'image',
