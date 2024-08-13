@@ -35,9 +35,7 @@ module.exports = () => {
         fingerprints: false,
         // automatically injects assets into the HTML file
         inject: true,
-        form_factors: {
-          wide: true,
-        },
+
         name: 'JustAnotherTextEditor',
         short_name: 'jate',
         description: 'Keep track of text added!',
@@ -45,6 +43,10 @@ module.exports = () => {
         theme_color: '#0e6655',
         start_url: './',
         publicPath: './',
+        form_factors: {
+          wide: true,
+          mobile: true,
+        },
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
