@@ -27,8 +27,6 @@ warmStrategyCache({
 
 registerRoute(({ request }) => request.mode === 'navigate', pageCache);
 
-// My instructor Dan Mueller gave me this code and said I should use it in the Challenge.
-// He said you should direct any concerns directly to him via Slack or at dmueller@2u.com
 // Set up asset cache
 registerRoute(
   ({ request }) => ['style', 'script', 'worker'].includes(request.destination),
@@ -37,6 +35,23 @@ registerRoute(
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
+      }),
+    ],
+  })
+);
+
+// Set up image cache
+registerRoute(
+  ({ request }) => request.destination === 'image',
+  new CacheFirst({
+    cacheName: 'image-cache',
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new ExpirationPlugin({
+        maxEntries: 50, // Limit the number of cached images
+        maxAgeSeconds: 7 * 24 * 60 * 60, // Cache images for 7 days
       }),
     ],
   })

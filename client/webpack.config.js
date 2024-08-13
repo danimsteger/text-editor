@@ -18,18 +18,26 @@ module.exports = () => {
     output: {
       filename: '[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      assetModuleFilename: 'assets/[name].[ext]',
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: './index.html',
+        template: path.resolve(__dirname, './index.html'),
         title: 'Webpack Plugin',
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
-        swDest: 'service-worker.js',
+        swDest: 'src-sw.js',
       }),
       new MiniCssExtractPlugin(),
       new WebpackPwaManifest({
+        // does not make unique hashes to asset filenames
+        fingerprints: false,
+        // automatically injects assets into the HTML file
+        inject: true,
+        form_factors: {
+          wide: true,
+        },
         name: 'JustAnotherTextEditor',
         short_name: 'jate',
         description: 'Keep track of text added!',
@@ -65,7 +73,7 @@ module.exports = () => {
             options: {
               presets: ['@babel/preset-env'],
               plugins: [
-                '@babel/plugin-proposal-object-rest-spread',
+                '@babel/plugin-transform-object-rest-spread',
                 '@babel/transform-runtime',
               ],
             },
